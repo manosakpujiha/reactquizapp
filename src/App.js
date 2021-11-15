@@ -7,7 +7,13 @@ import Header from './components/Header/Header';
 import Home from './components/Pages/Home/Home';
 import Quiz from './components/Pages/Quiz/Quiz';
 import Result from './components/Pages/Result/Result';
+import createSound from './sounds/click2.mp3';
+let sound = new Audio(createSound);
 
+function playSound() {
+  sound.volume = 0.1;
+  sound.play();
+}
 
 function App() {
   const [name, setName] = useState('manos');
@@ -20,20 +26,21 @@ function App() {
         category && `&category=${category}`
       }${difficulty && `&difficulty=${difficulty}`}&type=multiple`
     );
-      // console.log( data.results, data, name)
     setQuestions(data.results);
   };
 
+  
+
   return (
     <BrowserRouter>
-      <div className="App" style={{backgroundImage: "url(./ques1.png)"}}>
+      <div className="App">
         <Header/> 
         <Routes>
-          <Route path='/' element={<Home name={name} setName={setName} fetchQuestions={fetchQuestions}/>}>
+          <Route path='/' element={<Home name={name} setName={setName} fetchQuestions={fetchQuestions} sound={playSound}/>}>
           </Route>
-          <Route path='/quiz' element={<Quiz name={name} score={score} questions={questions} setScore = {setScore}/>}>
+          <Route path='/quiz' element={<Quiz name={name} score={score} questions={questions} setScore = {setScore} sound={playSound}/>}>
           </Route>
-          <Route path='/result' element={<Result name={name} score={score}/>} >
+          <Route path='/result' element={<Result name={name} score={score} sound={playSound}/>} >
           </Route>
         </Routes>
       </div>

@@ -4,7 +4,7 @@ import React, { useEffect, useState } from 'react';
 import Question from '../../Question/Question';
 
 
-const Quiz = ({name, score, questions, setScore }) => {
+const Quiz = ({name, score, questions, setScore}) => {
     const [options, setOptions] = useState() 
     const [currQues, setCurrQues] = useState(0)
 

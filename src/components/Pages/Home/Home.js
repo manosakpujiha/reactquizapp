@@ -9,12 +9,14 @@ import ErrorMessage from "../../ErrorMessage/ErrorMessage";
 
 
 
-const Home = ({name, setName, fetchQuestions}) => {
+const Home = ({name, setName, fetchQuestions, sound}) => {
     const [category, setCategory] = useState("");
     const [difficulty, setDifficulty] = useState('');
     const [error, setError] = useState(false);
-
     const navigate = useNavigate();
+    
+
+    
     function handleSubmit() {
         if (!category || !difficulty || !name) {
             setError(true);
@@ -23,6 +25,9 @@ const Home = ({name, setName, fetchQuestions}) => {
         else {
             setError(false);
             fetchQuestions(category, difficulty);
+            // let clicker = {click: sound}
+            // clicker.click()
+            sound.call()
             navigate('/quiz');
         }
     }
@@ -67,10 +72,10 @@ const Home = ({name, setName, fetchQuestions}) => {
                         Hard
                         </MenuItem>
                     </TextField>
-                    <Button variant='contained' color='primary' size='large' onClick={handleSubmit}>Start Quiz</Button>
+                    <Button variant='contained' color='primary' size='large'  onClick={handleSubmit}>Start Quiz</Button>
                 </div>
             </div>
-            <img src="/quiz.svg" className="banner" alt="quiz img"></img>
+            <img src="/home.png" className="banner" alt="quiz img"></img>
         </div>
     )
 }

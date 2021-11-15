@@ -12,7 +12,8 @@ const Question = ({
   correct,
   setScore,
   score,
-  setQuestions,
+  setQuestions
+
 }) => {
   const [selected, setSelected] = useState();
   const [error, setError] = useState(false);
@@ -20,6 +21,7 @@ const Question = ({
   const history = useNavigate();
 
   const handleSelect = (i) => {
+    // sound
     if (selected === i && selected === correct) {
       console.log(selected, i, correct)
       return "select";}
@@ -30,6 +32,7 @@ const Question = ({
   };
 
   const handleCheck = (i) => {
+
     setSelected(i);
     if (i === correct) setScore(score + 1);
     setError(false);
@@ -52,11 +55,12 @@ const Question = ({
 
   return (
     <div className="question">
-      <h1>Question {currQues + 1} :</h1>
+      <h1>Question {currQues + 1} </h1>
 
       <div className="singleQuestion">
-        <h2>{questions[currQues].question}</h2>
-        <div className="options">
+        
+        <h2 dangerouslySetInnerHTML = {{__html: questions[currQues].question}} />
+        <div className="options"  >
           {error && <ErrorMessage>{error}</ErrorMessage>}
           {options &&
             options.map((i) => { 
@@ -66,9 +70,8 @@ const Question = ({
                 key={i}
                 onClick={() => handleCheck(i)}
                 disabled={selected}
-              >
-                {i}
-              </button>
+                dangerouslySetInnerHTML = {{__html: i}}
+              />
             )})}
         </div>
         <div className="controls">

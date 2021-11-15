@@ -23,6 +23,10 @@
     border: 8px solid #39445a93;
     margin: 5px;
     padding: 5px;
+    background-image: url(./components/bg1.jpg);
+    background-repeat: no-repeat;
+    background-attachment: fixed;
+    background-size: cover;
   }
   
   .mainImg {
