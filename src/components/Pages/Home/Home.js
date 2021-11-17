@@ -6,17 +6,13 @@ import { useState } from 'react';
 import {useNavigate} from 'react-router-dom';
 import ErrorMessage from "../../ErrorMessage/ErrorMessage";
 
-
-
-
 const Home = ({name, setName, fetchQuestions, sound}) => {
-    const [category, setCategory] = useState("");
-    const [difficulty, setDifficulty] = useState('');
+    const [category, setCategory] = useState(18);
+    const [difficulty, setDifficulty] = useState('easy');
     const [error, setError] = useState(false);
     const navigate = useNavigate();
-    
+    console.log('home page render')
 
-    
     function handleSubmit() {
         if (!category || !difficulty || !name) {
             setError(true);
@@ -25,8 +21,6 @@ const Home = ({name, setName, fetchQuestions, sound}) => {
         else {
             setError(false);
             fetchQuestions(category, difficulty);
-            // let clicker = {click: sound}
-            // clicker.click()
             sound.call()
             navigate('/quiz');
         }
@@ -35,7 +29,7 @@ const Home = ({name, setName, fetchQuestions, sound}) => {
     return (
         <div className='content'>
             <div className='settings'>
-                <span style={{fontSize:30}}>Quiz Settings</span>
+                <span style={{fontSize:30}}>Settings</span>
                 <div className='settings__select'>
                     {error && <ErrorMessage>Please Fill all the Fields!</ErrorMessage>}
                     <TextField

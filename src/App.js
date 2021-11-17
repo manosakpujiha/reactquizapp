@@ -7,16 +7,23 @@ import Header from './components/Header/Header';
 import Home from './components/Pages/Home/Home';
 import Quiz from './components/Pages/Quiz/Quiz';
 import Result from './components/Pages/Result/Result';
-import createSound from './sounds/click2.mp3';
-let sound = new Audio(createSound);
+import clickSound from './sounds/click2.mp3';
+import briefingSound from './sounds/also briefing.mp3';
 
+
+let sound = new Audio(clickSound);
+let sound2 = new Audio(briefingSound);
+function backgroundSound() {
+  sound2.volume = 0.1;
+  sound2.play();
+}
 function playSound() {
   sound.volume = 0.1;
   sound.play();
 }
 
 function App() {
-  const [name, setName] = useState('manos');
+  const [name, setName] = useState('Guest');
   const [questions, setQuestions] = useState();
   const [score, setScore] = useState(0);
 
@@ -36,7 +43,7 @@ function App() {
       <div className="App">
         <Header/> 
         <Routes>
-          <Route path='/' element={<Home name={name} setName={setName} fetchQuestions={fetchQuestions} sound={playSound}/>}>
+          <Route path='/' element={<Home name={name} setName={setName} fetchQuestions={fetchQuestions} sound={playSound, backgroundSound}/>}>
           </Route>
           <Route path='/quiz' element={<Quiz name={name} score={score} questions={questions} setScore = {setScore} sound={playSound}/>}>
           </Route>

@@ -12,53 +12,56 @@ const Question = ({
   correct,
   setScore,
   score,
-  setQuestions
-
+  setQuestions,
+  stateOfTime,
+  setStateOfTime,
+  timer
 }) => {
   const [selected, setSelected] = useState();
   const [error, setError] = useState(false);
-
   const history = useNavigate();
+  console.log('question page render')
 
   const handleSelect = (i) => {
     // sound
+    console.log('hanle select')
     if (selected === i && selected === correct) {
-      console.log(selected, i, correct)
-      return "select";}
+      return "select"}
     else if (selected === i && selected !== correct) {
-      console.log(selected, i, correct)
-      return "wrong";}
+      return "wrong"}
     else if (i === correct) return "select";
   };
-
   const handleCheck = (i) => {
-
+    console.log('handleCheck')
+   
     setSelected(i);
     if (i === correct) setScore(score + 1);
     setError(false);
-  };
+  }
 
   const handleNext = () => {
+    console.log('handle next')
+    // timer(15).stop()
     if (currQues > 8) {
+      setCurrQues(currQues - 1);
       history("/result");
     } else if (selected) {
-      console.log(selected)
       setCurrQues(currQues + 1);
       setSelected();
-    } else setError("Please select an option first");
-  };
+    } else if (stateOfTime === "Time Left :  00"){ 
+      setCurrQues(currQues + 1);
+    }
+    else {setError("Please select an option first")} ;
+  }
 
   const handleQuit = () => {
     setCurrQues(0);
     setQuestions();
-  };
-
+  }
   return (
     <div className="question">
       <h1>Question {currQues + 1} </h1>
-
       <div className="singleQuestion">
-        
         <h2 dangerouslySetInnerHTML = {{__html: questions[currQues].question}} />
         <div className="options"  >
           {error && <ErrorMessage>{error}</ErrorMessage>}
