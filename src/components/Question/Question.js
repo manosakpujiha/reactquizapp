@@ -3,6 +3,13 @@ import { useState } from "react";
 import { useNavigate } from "react-router";
 import "./Question.css";
 import ErrorMessage from "../ErrorMessage/ErrorMessage";
+import correctSound from '../../sounds/correct.wav';
+import failSound from '../../sounds/fail.mp3';
+import buzzerSound from '../../sounds/buzzer.wav';
+
+
+
+const playSound = (sound) => new Audio(sound).play()
 
 const Question = ({
   currQues,
@@ -24,8 +31,9 @@ const Question = ({
 
   const handleSelect = (i) => {
     // sound
-    console.log('hanle select')
+    console.log('handle select')
     if (selected === i && selected === correct) {
+
       return "select"}
     else if (selected === i && selected !== correct) {
       return "wrong"}
@@ -35,23 +43,35 @@ const Question = ({
     console.log('handleCheck')
    
     setSelected(i);
-    if (i === correct) setScore(score + 1);
+    if (i === correct) {
+      playSound(correctSound)
+      setScore(score + 1)
+    } else {
+      playSound(failSound)
+    }
+    
     setError(false);
   }
 
   const handleNext = () => {
     console.log('handle next')
-    // timer(15).stop()
     if (currQues > 8) {
-      setCurrQues(currQues - 1);
+      console.log('last question procceeding to result page', currQues)
       history("/result");
     } else if (selected) {
+      console.log('selected an answer', currQues)
       setCurrQues(currQues + 1);
       setSelected();
     } else if (stateOfTime === "Time Left :  00"){ 
+      console.log('time is up')
       setCurrQues(currQues + 1);
     }
-    else {setError("Please select an option first")} ;
+    else {
+      setError("Please select an option first")
+      playSound(buzzerSound)
+
+      
+  }
   }
 
   const handleQuit = () => {

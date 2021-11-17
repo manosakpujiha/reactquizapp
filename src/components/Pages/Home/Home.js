@@ -5,23 +5,33 @@ import Categories from '../../../Data/Categories.js';
 import { useState } from 'react';
 import {useNavigate} from 'react-router-dom';
 import ErrorMessage from "../../ErrorMessage/ErrorMessage";
+import typingSound from '../../../sounds/typing4.wav';
+import buzzerSound from '../../../sounds/buzzer.wav';
 
-const Home = ({name, setName, fetchQuestions, sound}) => {
-    const [category, setCategory] = useState(18);
-    const [difficulty, setDifficulty] = useState('easy');
+
+const Home = ({name, setName, fetchQuestions, clickSound}) => {
+    const [category, setCategory] = useState('');
+    const [difficulty, setDifficulty] = useState('');
     const [error, setError] = useState(false);
     const navigate = useNavigate();
     console.log('home page render')
 
+  
+
+    function playSound(sound) {
+        // new Audio(sound).volume = 0.1;
+        new Audio(sound).play();
+    }
+
     function handleSubmit() {
         if (!category || !difficulty || !name) {
+            playSound(buzzerSound)
             setError(true);
-            return;
         }
         else {
             setError(false);
             fetchQuestions(category, difficulty);
-            sound.call()
+            clickSound.call()
             navigate('/quiz');
         }
     }
@@ -36,14 +46,20 @@ const Home = ({name, setName, fetchQuestions, sound}) => {
                         style={{ marginBottom: 25 }}
                         label="Enter Your Name"
                         variant="outlined"
-                        onChange={(e) => setName(e.target.value)}
+                        onChange={(e) => { 
+                            playSound(typingSound)
+                           return setName(e.target.value)
+                            
+                        }}
                     />
                     <TextField
                         select
                         label="Select Category"
                         variant="outlined"
                         style={{ marginBottom: 30}}
-                        onChange={(e) => setCategory(e.target.value)}
+                        onChange={(e) => { 
+                            clickSound.call()
+                            setCategory(e.target.value)}}
                         value = {category}
                     >
                         {Categories.map((cat) => (<MenuItem key={cat.category} value={cat.value}>{cat.category}</MenuItem>))}
@@ -53,7 +69,9 @@ const Home = ({name, setName, fetchQuestions, sound}) => {
                         label="Select Difficulty"
                         variant="outlined"
                         style={{ marginBottom: 30 }}
-                        onChange={(e) => setDifficulty(e.target.value)}
+                        onChange={(e) => { 
+                            clickSound.call()
+                            setDifficulty(e.target.value)}}
                         value = {difficulty}
                     >
                         <MenuItem key="Easy" value="easy">

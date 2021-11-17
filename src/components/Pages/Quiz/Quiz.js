@@ -2,12 +2,24 @@ import './Quiz.css'
 import { CircularProgress } from '@mui/material';
 import React, { useEffect, useState } from 'react';
 import Question from '../../Question/Question';
+import clockTick from '../../../sounds/clockbeep.wav';
+import fail from '../../../sounds/fail.mp3';
 
-const Quiz = ({name, score, questions, setScore}) => {
+const Quiz = ({name, score, questions, setScore, clickSound}) => {
     const [options, setOptions] = useState()
     const [currQues, setCurrQues] = useState(0)
     const [stateOfTime, setStateOfTime] = useState()
     console.log('quiz page render')
+
+    const playSound = (sound) => new Audio(sound).play()
+   
+
+
+
+   
+
+
+   
 
     useEffect(() => {
         setOptions(questions && handleShuffle([
@@ -34,8 +46,8 @@ const Quiz = ({name, score, questions, setScore}) => {
                     stopTimer() 
                     
                 } else {
+                   playSound(clockTick)
                     countDownTimer.textContent =   time; 
-
                     time--; //decrement the time value
                     console.log(currQues)
                     
@@ -67,6 +79,7 @@ const Quiz = ({name, score, questions, setScore}) => {
                                 op[i].classList.add("select");
                             } 
                             op[i].disabled = true;
+                            playSound(fail)
                             
                         }
                 
@@ -84,6 +97,7 @@ const Quiz = ({name, score, questions, setScore}) => {
 
    
         const handleShuffle = (optionss) => {
+            clickSound.call()
             console.log('handle shuffle')
             timer(15).start()
             return optionss.sort(() => Math.random() - 0.5);
