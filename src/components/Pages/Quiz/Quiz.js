@@ -12,21 +12,23 @@ const Quiz = ({name, score, questions, setScore, clickSound}) => {
     console.log('quiz page render')
 
     const playSound = (sound) => new Audio(sound).play()
+    function handleShuffle (optionss)  {
+        clickSound.call()
+        timer(15).start()
+        console.log('handle shuffle')
+        return optionss.sort(() => Math.random() - 0.5);
+    }
    
-
-
-
-   
-
-
-   
-
-    useEffect(() => {
+    useEffect(( ) => {
         setOptions(questions && handleShuffle([
             questions[currQues]?.correct_answer,...questions[currQues]?.incorrect_answers
         ]))
     }, [questions, currQues])
     
+
+    // useEffect(( ) => {
+    //     setOptions(questions )
+    // }, [questions, currQues])
     
         function timer(time) {
             console.log('timer function')
@@ -58,7 +60,6 @@ const Quiz = ({name, score, questions, setScore, clickSound}) => {
                         } 
                     
                     }
-
 
                     let addZero = countDownTimer.textContent; 
                     if(time < 9) { //if timer is less than 9
@@ -94,14 +95,8 @@ const Quiz = ({name, score, questions, setScore, clickSound}) => {
             };
             
         }
-
-   
-        const handleShuffle = (optionss) => {
-            clickSound.call()
-            console.log('handle shuffle')
-            timer(15).start()
-            return optionss.sort(() => Math.random() - 0.5);
-        }
+       
+       
     
       
     
