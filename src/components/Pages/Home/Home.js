@@ -2,7 +2,7 @@
 import './Home.css'
 import { Button, MenuItem, TextField } from '@mui/material';
 import Categories from '../../../Data/Categories.js';
-import { useState } from 'react';
+import { useState} from 'react';
 import {useNavigate} from 'react-router-dom';
 import ErrorMessage from "../../ErrorMessage/ErrorMessage";
 import typingSound from '../../../sounds/typing4.wav';

@@ -40,7 +40,7 @@ function App() {
         <Routes>
           <Route path='/' element={<Home name={name} setName={setName} fetchQuestions={fetchQuestions} clickSound={clickSound}  />}>
           </Route>
-          <Route path='/quiz' element={<Quiz name={name} score={score} questions={questions} setScore = {setScore} clickSound={clickSound}/>}>
+          <Route path='/quiz' element={<Quiz name={name} score={score} questions={questions} setScore ={setScore} clickSound={clickSound}/>}>
           </Route>
           <Route path='/result' element={<Result name={name} score={score} clickSound={clickSound}/>} >
           </Route>
